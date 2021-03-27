@@ -1,16 +1,19 @@
 {
   "name": "minimal-dependency-injection-container",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "Minimal dependency injection container.",
-  "main": "build/index.js",
+  "main": "build/Container.js",
   "types": "build",
-  "keywords":  ["dependency-injection", "di", "container"],
+  "keywords": [
+    "dependency-injection",
+    "di",
+    "container"
+  ],
   "scripts": {
     "build": "tsc -p .",
     "start": "ts-node-dev app.ts",
     "test": "jest --silent --verbose --coverage"
   },
-  "type": "module",
   "author": "Maurer Krisztian",
   "license": "ISC",
   "dependencies": {
