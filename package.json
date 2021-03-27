@@ -1,0 +1,37 @@
+{
+  "name": "minimal-dependency-injection-container",
+  "version": "1.0.3",
+  "description": "Minimal dependency injection container.",
+  "main": "build/index.js",
+  "types": "build",
+  "keywords":  ["dependency-injection", "di", "container"],
+  "scripts": {
+    "build": "tsc -p .",
+    "start": "ts-node-dev app.ts",
+    "test": "jest --silent --verbose --coverage"
+  },
+  "type": "module",
+  "author": "Maurer Krisztian",
+  "license": "ISC",
+  "dependencies": {
+    "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "ts-node": "^8.10.2",
+    "ts-node-dev": "^1.0.0-pre.52",
+    "@types/reflect-metadata": "^0.1.0",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^14.0.23",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.4.4",
+    "typescript": "^3.9.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaurerKrisztian/minimal-dependency-injection.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MaurerKrisztian/minimal-dependency-injection/issues"
+  },
+  "homepage": "https://github.com/MaurerKrisztian/minimal-dependency-injection#readme"
+}

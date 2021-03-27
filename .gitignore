@@ -1,0 +1,6 @@
+node_modules
+.idea
+coverage
+package-lock.json
+app.ts
+build
