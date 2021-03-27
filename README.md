@@ -7,6 +7,17 @@
   * factory
 * bean injection by key
 
+
+### Setup:
+####tsconfig.json:
+Uncomment and fill in the following lines that are necessary in order to use the experimental decorators.
+```json
+{
+"experimentalDecorators": true,
+"emitDecoratorMetadata": true
+}
+```
+
 ### Decorators:
 ```typescript
 @Inject(key: string) // inject class constructor parameters or method parameters
