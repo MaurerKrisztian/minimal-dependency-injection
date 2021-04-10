@@ -66,7 +66,7 @@ const productController = await container.resolveByType<ProductController>(Produ
 
 After 2:
 ```typescript
-const container = new Container({enableAutoCreate: true});
+const container = new Container();
 container.registerTypes([
   ProductController,
   CacheService,
