@@ -1,7 +1,7 @@
-import {Keys} from "../../Keys";
-import {IRunBefore} from "../../interfaces/IRunBefore";
-import {IResolver} from "../../interfaces/IResolver";
-import {IInitializer} from "./IInitializer";
+import { Keys } from "../../Keys";
+import { IRunBefore } from "../../interfaces/IRunBefore";
+import { IResolver } from "../../interfaces/IResolver";
+import { IInitializer } from "./IInitializer";
 
 export class RunBeforeModifier implements IInitializer {
     constructor(private readonly resolver: IResolver) {

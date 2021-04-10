@@ -1,11 +1,11 @@
-import {Keys} from "../Keys";
-import {IContainerChainingOptions} from "../interfaces/IContainerChainingOptions";
-import {Container} from "../Container";
-import {IInstantiatable} from "../interfaces/IInstantiatable";
-import {ConstantInstantiation} from "../definitions/ConstantInstantiation";
-import {FactoryInstantiation} from "../definitions/FactoryInstantiation";
-import {FactoryResultInstantiation} from "../definitions/FactoryResultInstantiation";
-import {ConstructorInstantiation} from "../definitions/ConstructorInstantiation";
+import { Keys } from "../Keys";
+import { IContainerChainingOptions } from "../interfaces/IContainerChainingOptions";
+import { Container } from "../Container";
+import { IInstantiatable } from "../interfaces/IInstantiatable";
+import { ConstantInstantiation } from "../definitions/ConstantInstantiation";
+import { FactoryInstantiation } from "../definitions/FactoryInstantiation";
+import { FactoryResultInstantiation } from "../definitions/FactoryResultInstantiation";
+import { ConstructorInstantiation } from "../definitions/ConstructorInstantiation";
 
 export class ChainingOptions implements IContainerChainingOptions {
     instantiable: IInstantiatable;
@@ -19,17 +19,16 @@ export class ChainingOptions implements IContainerChainingOptions {
     }
 
     asPrototype(): this {
-        this.instantiable.definition.instantiationMode = 'prototype'
+        this.instantiable.definition.instantiationMode = 'prototype';
         this.setDefinitionChanges();
         return this;
     }
 
     asSingleton(): this {
-        this.instantiable.definition.instantiationMode = 'singleton'
+        this.instantiable.definition.instantiationMode = 'singleton';
         this.setDefinitionChanges();
         return this;
     }
-
 
     asConstant(): this {
         this.instantiable = new ConstantInstantiation({
@@ -48,26 +47,26 @@ export class ChainingOptions implements IContainerChainingOptions {
         const getFactoryMethod = (ctr: any) => {
             const meta = Reflect.getMetadata(Keys.FACTORY_METHOD_PROPERTY_DECORATOR_KEY, ctr) || {};
             return meta[Keys.FACTORY_METHOD_PROPERTY_DECORATOR_KEY];
-        }
+        };
 
-        let factoryDefinition = {
+        const factoryDefinition = {
             key: this.key,
             content: this.instantiable.definition.content,
-            factoryFn: 'create',
+            factoryFn: "create",
             instantiationMode: this.instantiable.definition.instantiationMode
-        }
+        };
 
         const metaFactoryMethod = getFactoryMethod(this.instantiable.definition.content);
 
-        if (factoryFnName != undefined) {
+        if (factoryFnName !== undefined) {
             factoryDefinition.factoryFn = factoryFnName;
-        } else if (metaFactoryMethod != undefined) {
+        } else if (metaFactoryMethod !== undefined) {
             factoryDefinition.factoryFn = metaFactoryMethod;
         } else {
-            factoryDefinition.factoryFn = 'create';
+            factoryDefinition.factoryFn = "create";
         }
 
-        this.instantiable = new FactoryInstantiation(factoryDefinition, this.container)
+        this.instantiable = new FactoryInstantiation(factoryDefinition, this.container);
         this.setDefinitionChanges();
         return this;
     }
@@ -82,7 +81,7 @@ export class ChainingOptions implements IContainerChainingOptions {
         this.instantiable = new FactoryResultInstantiation({
                 key: this.key,
                 content: this.instantiable.definition.content,
-                factoryKey: factoryKey,
+                factoryKey,
                 factoryMethodContext: {},
                 instantiationMode: this.instantiable.definition.instantiationMode
             },
@@ -107,18 +106,11 @@ export class ChainingOptions implements IContainerChainingOptions {
         }
         this.instantiable.definition.factoryMethodContext = context;
         this.setDefinitionChanges();
-        return this
+        return this;
     }
 
-    addTags(tagsObj: object){
+    addTags(tagsObj: object) {
         this.container.definitionsRepository.addTags(this.key, tagsObj);
     }
-
-
-    // asController() {
-    //     this.instantiable.tags?.push(Keys.CONTROLLER_CLASS);
-    //     this.setDefinitionChanges();
-    //     return this;
-    // }
 
 }

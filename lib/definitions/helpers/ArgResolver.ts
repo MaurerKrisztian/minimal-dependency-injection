@@ -1,6 +1,6 @@
-import {IResolver} from "../../interfaces/IResolver";
-import {IParam} from "../../decorators/Inject";
-import {Keys} from "../../Keys";
+import { IResolver } from "../../interfaces/IResolver";
+import { IParam } from "../../decorators/Inject";
+import { Keys } from "../../Keys";
 
 export class ArgResolver {
 
@@ -8,7 +8,7 @@ export class ArgResolver {
     }
 
     paramIsNotRequired(param: IParam) {
-        return !this.resolver.hasKeyInDefinition(param.key) && !param?.isRequired
+        return !this.resolver.hasKeyInDefinition(param.key) && !param?.isRequired;
     }
 
     async resolveArguments(meta: any, context: any, decoratorKey: symbol | string) {
@@ -25,19 +25,18 @@ export class ArgResolver {
             } else if (this.paramIsNotRequired(args[i])) {
                 resolvedArgs.push(undefined);
             } else {
-                resolvedArgs.push(await this.resolver.resolve(args[i].key, args[i].isRequired))
+                resolvedArgs.push(await this.resolver.resolve(args[i].key, args[i].isRequired));
             }
         }
         return resolvedArgs;
     }
 
-    mapContextToArgs(args: IParam[], ctx: any) {
-        const newArgs = args.map((arg: IParam) => {
+    mapContextToArgs(args: IParam[], ctx: any): IParam[] {
+        return args.map((arg: IParam) => {
             if (ctx[arg.key]) {
-                return {key: ctx[arg.key], isRequired: arg.isRequired, index: arg.index}
+                return {key: ctx[arg.key], isRequired: arg.isRequired, index: arg.index};
             }
             return arg;
         });
-        return newArgs;
     }
 }

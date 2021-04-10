@@ -1,19 +1,18 @@
 import "reflect-metadata";
-import {IContainer} from "./interfaces/IContainer";
-import {InstantiationModeCO} from "./chainingOptions/InstantiationModeCO";
-import {IInstantiatable, instantiationMode} from "./interfaces/IInstantiatable";
-import {IResolver} from "./interfaces/IResolver";
-import {ConstructorInstantiation} from "./definitions/ConstructorInstantiation";
-import {ConstantInstantiation} from "./definitions/ConstantInstantiation";
-import {IInterceptor} from "./interfaces/IInterceptor";
-import {Initializers} from "./modifiers/Initializers";
-import {Utils} from "./Utils";
-import {DefinitionRepository} from "./DefinitionRepository";
-import {Keys} from "./Keys";
+import { IContainer } from "./interfaces/IContainer";
+import { InstantiationModeCO } from "./chainingOptions/InstantiationModeCO";
+import { IInstantiatable, instantiationMode } from "./interfaces/IInstantiatable";
+import { IResolver } from "./interfaces/IResolver";
+import { ConstructorInstantiation } from "./definitions/ConstructorInstantiation";
+import { ConstantInstantiation } from "./definitions/ConstantInstantiation";
+import { IInterceptor } from "./interfaces/IInterceptor";
+import { Initializers } from "./modifiers/Initializers";
+import { Utils } from "./Utils";
+import { DefinitionRepository } from "./DefinitionRepository";
+import { Keys } from "./Keys";
 
-export {InjectProperty} from "./decorators/InjectProperty";
-export type singletonsType = Map<string, any>
-import {v4 as uuidv4} from 'uuid';
+export type singletonsType = Map<string, any>;
+import { v4 as uuidv4 } from "uuid";
 
 export interface IContainerOption {
     enableAutoCreate: boolean; // if dependency not exist in the container, creat it and register
@@ -22,13 +21,13 @@ export interface IContainerOption {
 
 export class Container implements IContainer, IResolver {
 
-    definitionsRepository = new DefinitionRepository(this.options) //new Map<string, IInstantiatable>();
+    definitionsRepository = new DefinitionRepository(this.options);
     protected singletons: singletonsType = new Map<string, any>();
     interceptors: IInterceptor[] = [];
 
     initializers = new Initializers(this);
 
-    protected DEFAULT_INSTANTIATION: instantiationMode = 'singleton';
+    protected DEFAULT_INSTANTIATION: instantiationMode = "singleton";
 
     constructor(private readonly options: IContainerOption = {
         enableAutoCreate: false
@@ -43,20 +42,20 @@ export class Container implements IContainer, IResolver {
 
     public registerTypes(constructors: any[]) {
         for (const constructor of constructors) {
-            this.register(uuidv4(), constructor)
+            this.register(uuidv4(), constructor);
         }
     }
 
     public async resolveByType<T>(constructor: any): Promise<T> {
-        const def = this.definitionsRepository.getDefinitionByType(constructor)
+        const def = this.definitionsRepository.getDefinitionByType(constructor);
 
         if (def === Keys.AUTO_CREATE_DEPENDENCY && this.options.enableAutoCreate) {
-            await this.registerTypes([constructor])
+            await this.registerTypes([constructor]);
             return await this.resolveByType(constructor);
         } else if (def) {
             return (this.definitionsRepository.getDefinitionByType(constructor) as IInstantiatable).instantiate();
         } else {
-            throw new Error(`cannot resolve ${constructor}`)
+            throw new Error(`cannot resolve ${constructor}`);
         }
     }
 
@@ -64,15 +63,15 @@ export class Container implements IContainer, IResolver {
         const instantiatable: IInstantiatable = this.definitionsRepository.getDefinition(key);
 
         switch (instantiatable.definition.instantiationMode) {
-            case 'prototype': {
-                let originalInstance = await this.resolvePrototype<T>(instantiatable.definition.key);
+            case "prototype": {
+                const originalInstance = await this.resolvePrototype<T>(instantiatable.definition.key);
                 return await this.applyModificationToInstance(originalInstance, instantiatable.definition);
             }
-            case 'singleton': {
+            case "singleton": {
                 return await this.resolveSingleton<T>(instantiatable);
             }
             default: {
-                throw new Error('Cannot resolve: ' + key + ' because instantiationMode is:  ' + instantiatable.definition.instantiationMode);
+                throw new Error(`Cannot resolve: ${key} because instantiationMode is:  ${instantiatable.definition.instantiationMode}`);
             }
         }
     }
@@ -116,7 +115,7 @@ export class Container implements IContainer, IResolver {
 
 
     addInterceptor(interceptor: IInterceptor) {
-        this.interceptors.push(interceptor)
+        this.interceptors.push(interceptor);
     }
 
     async done() {
@@ -138,17 +137,17 @@ export class Container implements IContainer, IResolver {
 
         if (Utils.isClass(content)) {
             const res = new ConstructorInstantiation({
-                key: key,
-                content: content,
+                key,
+                content,
                 context: {},
                 instantiationMode: this.DEFAULT_INSTANTIATION,
-            }, this)
+            }, this);
             res.tags = decoratorTags;
             return res;
         }
         const res = new ConstantInstantiation({
-            key: key,
-            content: content,
+            key,
+            content,
             instantiationMode: this.DEFAULT_INSTANTIATION
         });
         return res;
@@ -171,14 +170,14 @@ export class Container implements IContainer, IResolver {
 
 
     /*
-    * resolve test for all keys. (run this after all key was registrated)
+    * resolve test for all keys. (run this after all key was registered)
     * */
     async containerTest() {
         for (const key of this.definitionsRepository.definitions.keys()) {
             try {
                 await this.resolve<any>(key);
             } catch (err) {
-                throw new Error('Not proper registration. details: ' + err)
+                throw new Error(`Not proper registration. details: ${err}`);
             }
         }
     }

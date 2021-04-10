@@ -1,5 +1,5 @@
-import {Container} from "../lib/Container";
-import {Inject} from "../lib/decorators/Inject";
+import { Container } from "../lib/Container";
+import { Inject } from "../lib/decorators/Inject";
 
 describe("InjectParam tests", () => {
     test("InjectParam const test", async () => {
@@ -14,7 +14,7 @@ describe("InjectParam tests", () => {
         }
 
         const container = new Container();
-        container.register("value", "world")
+        container.register("value", "world");
         container.register("client", Client);
 
         const client = await container.resolve<Client>("client");
@@ -44,14 +44,14 @@ describe("InjectParam tests", () => {
         }
 
         const container = new Container();
-        container.register("client", Client)
+        container.register("client", Client);
         container.register("service", Service);
 
         const service = await container.resolve<Service>("service");
         const expected = service.check();
         expect(expected).toBe("client says: hello world");
 
-    })
+    });
 
     test("inject multiple params", async () => {
         class Client {
@@ -65,14 +65,14 @@ describe("InjectParam tests", () => {
 
         const container = new Container();
 
-        container.register("name", "John")
-        container.register("age", 30)
+        container.register("name", "John");
+        container.register("age", 30);
         container.register("client", Client);
 
-        const client = await container.resolve<Client>("client")
+        const client = await container.resolve<Client>("client");
         const expected = client.say();
-        expect(expected).toBe("My name is John, and I'm 30 years old")
+        expect(expected).toBe("My name is John, and I'm 30 years old");
 
-    })
+    });
 
 });

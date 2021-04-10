@@ -1,6 +1,6 @@
-import {IInstantiatable} from "./interfaces/IInstantiatable";
-import {IContainerOption} from "./Container";
-import {Keys} from "./Keys";
+import { IInstantiatable } from "./interfaces/IInstantiatable";
+import { IContainerOption } from "./Container";
+import { Keys } from "./Keys";
 
 export class DefinitionRepository {
     definitions = new Map<string, IInstantiatable>();
@@ -15,14 +15,14 @@ export class DefinitionRepository {
 
     getDefinition(key: string): IInstantiatable {
         if (!this.definitions.has(key)) {
-            throw new Error(`${key} instance is undefined`)
+            throw new Error(`${key} instance is undefined`);
         }
         return this.definitions.get(key) as IInstantiatable;
     }
 
     getDefinitionByType(constructor: any): IInstantiatable | symbol {
         for (const [key, value] of this.definitions.entries()) {
-            if (value.definition.content == constructor) {
+            if (value.definition.content === constructor) {
                 return value;
             }
         }
@@ -35,14 +35,14 @@ export class DefinitionRepository {
     }
 
     getDefinitionKeysBySpecificTags(tagObj: any): string[] {
-        let resultKeys: string[] = [];
+        const resultKeys: string[] = [];
         const tags = Object.keys(tagObj);
 
 
         this.definitions.forEach((value: IInstantiatable, key: string) => {
             let found = true;
             tags.forEach((tag) => {
-                if (!(value.tags.hasOwnProperty(tag) && value.tags[tag] == tagObj[tag])) {
+                if (!(value.tags.hasOwnProperty(tag) && value.tags[tag] === tagObj[tag])) {
                     found = false;
                 }
             });
@@ -56,20 +56,20 @@ export class DefinitionRepository {
     }
 
     getDefinitionKeysByTags(tags: string[]): string[] {
-        let resultKeys: string[] = [];
+        const resultKeys: string[] = [];
         this.definitions.forEach((value: IInstantiatable, key: string) => {
             tags.forEach((tag) => {
                 if (value.tags.hasOwnProperty(tag)) {
                     resultKeys.push(key);
                 }
-            })
+            });
         });
         return resultKeys;
     }
 
     addTags(key: string, tagsObj: object) {
         const definition = this.getDefinition(key);
-        const newTags = {...definition.tags, ...tagsObj}
+        const newTags = {...definition.tags, ...tagsObj};
         definition.tags = newTags;
     }
 

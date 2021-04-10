@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import {Keys} from "../Keys";
+import { Keys } from "../Keys";
 
 /*
 * Save meta for constructor parameter or function parameter
@@ -16,21 +16,21 @@ export function Inject(propertyKey?: string) {
         const reqParamCount = target[key]?.length || target?.length;
 
         const metadata: any = Reflect.getMetadata(metaKey, ctrOrTarget) || {};
-        if (metadata[metaKey] == undefined) {
+        if (metadata[metaKey] === undefined) {
             metadata[metaKey] = [];
             metadata[Keys.IS_REQUIRED_PARAM] = [];
         }
 
-        const param: IParam = {key: propertyKey, isRequired: (parameterIndex < reqParamCount), index: parameterIndex}
+        const param: IParam = {key: propertyKey, isRequired: (parameterIndex < reqParamCount), index: parameterIndex};
 
         // @ts-ignore
         metadata[metaKey][parameterIndex] = param;
         Reflect.defineMetadata(metaKey, metadata, ctrOrTarget);
-    }
+    };
 }
 
 export interface IParam {
-    key: any,
-    isRequired: boolean,
-    index: number
+    key: any;
+    isRequired: boolean;
+    index: number;
 }

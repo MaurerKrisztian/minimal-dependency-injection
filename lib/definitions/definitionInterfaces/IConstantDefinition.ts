@@ -1,6 +1,5 @@
-import {instantiationMode} from "../../interfaces/IInstantiatable";
-import {IBaseDefinition} from "./IBaseDefinition";
+import { IBaseDefinition } from "./IBaseDefinition";
 
-export interface IConstantDefinition  extends IBaseDefinition{
+export interface IConstantDefinition extends IBaseDefinition {
 
 }

@@ -1,6 +1,6 @@
-import {ChainingOptions} from "./ChainingOptions";
-import {Container} from "../Container";
-import {IInstantiatable} from "../interfaces/IInstantiatable";
+import { ChainingOptions } from "./ChainingOptions";
+import { Container } from "../Container";
+import { IInstantiatable } from "../interfaces/IInstantiatable";
 
 export class AsFactoryCO {
     private instantiatable: IInstantiatable;

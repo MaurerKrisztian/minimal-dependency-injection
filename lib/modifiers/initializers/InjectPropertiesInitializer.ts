@@ -1,7 +1,7 @@
-import {IInitializer} from "./IInitializer";
-import {Keys} from "../../Keys";
-import {ArgResolver} from "../../definitions/helpers/ArgResolver";
-import {IResolver} from "../../interfaces/IResolver";
+import { IInitializer } from "./IInitializer";
+import { Keys } from "../../Keys";
+import { ArgResolver } from "../../definitions/helpers/ArgResolver";
+import { IResolver } from "../../interfaces/IResolver";
 
 export class InjectPropertiesInitializer implements IInitializer {
     argResolver: ArgResolver = new ArgResolver(this.resolver);
@@ -10,7 +10,7 @@ export class InjectPropertiesInitializer implements IInitializer {
     }
 
     async run(resolvedInstance: any, definition: any): Promise<any> {
-        return await this.injectProperties(resolvedInstance, definition)
+        return await this.injectProperties(resolvedInstance, definition);
     }
 
 
@@ -20,7 +20,7 @@ export class InjectPropertiesInitializer implements IInitializer {
 
         const setInstanceProperty = (key: any, value: any) => {
             resolvedInstance[key] = value;
-        }
+        };
 
         for (const key in propertiesMeta) {
             const resolvedKey = await this.resolver.resolve(propertiesMeta[key]);

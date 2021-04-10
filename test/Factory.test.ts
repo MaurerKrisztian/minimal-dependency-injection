@@ -1,5 +1,6 @@
-import {Container} from "../lib/Container";
-import {FactoryClass} from "./testClass/FactoryClass";
+/* tslint:disable:quotemark */
+import { Container } from "../lib/Container";
+import { FactoryClass } from "./testClass/FactoryClass";
 
 describe("Factory test", () => {
     test("Factory methods test", async () => {
@@ -7,10 +8,10 @@ describe("Factory test", () => {
 
         const firstFactoryParam = "firstFactoryParam";
         const secondFactoryParam = "secondFactoryParam";
-        const factoryConstructorPram1 = 'factoryParam1 constant data';
+        const factoryConstructorPram1 = "factoryParam1 constant data";
 
-        container.register('otherParam1', 'replaced1').asConstant();
-        container.register('otherParam2', 'replaced2').asConstant();
+        container.register('otherParam1', "replaced1").asConstant();
+        container.register('otherParam2', "replaced2").asConstant();
 
 
         container.register('factoryParam1', factoryConstructorPram1).asConstant();
@@ -27,7 +28,7 @@ describe("Factory test", () => {
         expect(factoryResult).toBe("factoryMethodName result: value: " + firstFactoryParam + " value2: " + secondFactoryParam);
 
         container.register('factoryKey2', FactoryClass).asFactory('create2'); // call factoryObj.create2()
-        container.register('factoryResult2', String).asFactoryResult('factoryKey2')
+        container.register('factoryResult2', String).asFactoryResult('factoryKey2');
         const factoryResult2 = await container.resolve<FactoryClass>('factoryResult2');
         expect(factoryResult2).toBe('create2 result');
 
@@ -48,19 +49,19 @@ describe("Factory test", () => {
     test("using unknown factory key", async () => {
         const container = new Container();
         try {
-        expect( container.register('factoryResult', String).asFactoryResult('factoryKey')).toThrow("factoryKey is not a factory");
-        }catch (e) {
+            expect(container.register('factoryResult', String).asFactoryResult('factoryKey')).toThrow("factoryKey is not a factory");
+        } catch (e) {
         }
 
-    })
-        test("factory with context test", async () => {
-            const txt1 = "some string"
-            const container = new Container();
-            container.register('factoryParam1', txt1)
-            container.register('factoryKey3', FactoryClass).asFactory().withContext( 'factoryParam1')
-            const expected = await container.resolve<FactoryClass>("factoryKey3");
-            expect(expected.getValue()).toBe("some string")
+    });
+    test("factory with context test", async () => {
+        const txt1 = "some string";
+        const container = new Container();
+        container.register('factoryParam1', txt1);
+        container.register('factoryKey3', FactoryClass).asFactory().withContext('factoryParam1');
+        const expected = await container.resolve<FactoryClass>("factoryKey3");
+        expect(expected.getValue()).toBe("some string");
 
-        })
+    });
 
 });

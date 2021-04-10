@@ -1,5 +1,5 @@
-import {IInstantiatable} from "../interfaces/IInstantiatable";
-import {IConstantDefinition} from "./definitionInterfaces/IConstantDefinition";
+import { IInstantiatable } from "../interfaces/IInstantiatable";
+import { IConstantDefinition } from "./definitionInterfaces/IConstantDefinition";
 
 export class ConstantInstantiation implements IInstantiatable {
     tags = {};

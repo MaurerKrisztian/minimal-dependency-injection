@@ -1,7 +1,7 @@
-import {Keys} from "../../Keys";
-import {IRunAfter} from "../../interfaces/IRunAfter";
-import {IResolver} from "../../interfaces/IResolver";
-import {IInitializer} from "./IInitializer";
+import { Keys } from "../../Keys";
+import { IRunAfter } from "../../interfaces/IRunAfter";
+import { IResolver } from "../../interfaces/IResolver";
+import { IInitializer } from "./IInitializer";
 
 export class RunAfterModifier implements IInitializer {
 

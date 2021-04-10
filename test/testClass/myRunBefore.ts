@@ -1,8 +1,8 @@
-import {IRunBefore} from "../../lib/interfaces/IRunBefore";
+import { IRunBefore } from "../../lib/interfaces/IRunBefore";
 
 export class MyRunBefore implements IRunBefore {
 
     run() {
-        console.log("run before....")
+        console.log("run before....");
     }
 }

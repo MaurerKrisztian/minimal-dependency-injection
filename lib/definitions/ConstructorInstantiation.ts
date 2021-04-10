@@ -1,9 +1,9 @@
-import {Keys} from "../Keys";
-import {IConstructorDefinition} from "./definitionInterfaces/IConstructorDefinition";
-import {IInstantiatable} from "../interfaces/IInstantiatable";
-import {IResolver} from "../interfaces/IResolver";
-import {ArgResolver} from "./helpers/ArgResolver";
-import {Utils} from "../Utils";
+import { Keys } from "../Keys";
+import { IConstructorDefinition } from "./definitionInterfaces/IConstructorDefinition";
+import { IInstantiatable } from "../interfaces/IInstantiatable";
+import { IResolver } from "../interfaces/IResolver";
+import { ArgResolver } from "./helpers/ArgResolver";
+import { Utils } from "../Utils";
 
 export class ConstructorInstantiation implements IInstantiatable {
     tags = {};
@@ -26,9 +26,9 @@ export class ConstructorInstantiation implements IInstantiatable {
     * */
     async resolveArgsWithoutKey(ctr: any, args: any[]) {
 
-        const constructorArgs = Reflect.getMetadata('design:paramtypes', ctr) || [];
+        const constructorArgs = Reflect.getMetadata("design:paramtypes", ctr) || [];
         // correction if 0 param in constructorArgs
-        if (args.length == 0) {
+        if (args.length === 0) {
             for (let i = 0; i < Utils.getRequiredParamLength(ctr); i++) {
                 args.push(Keys.OTHER_INJECTION_REQUIRED);
             }
@@ -46,11 +46,7 @@ export class ConstructorInstantiation implements IInstantiatable {
         const meta = Reflect.getMetadata(decoratorKey, ctr) || {};
         let args: any = await this.argResolver.resolveArguments(meta, context, Keys.INJECT_PROPERTY_DECORATOR_KEY);
         args = await this.resolveArgsWithoutKey(ctr, args);
-
-
-        let resolvedInstance = new ctr(...args);
-
-        return resolvedInstance;
+        return new ctr(...args);
     }
 
 }

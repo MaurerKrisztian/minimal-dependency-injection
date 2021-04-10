@@ -1,8 +1,8 @@
-import {Keys} from "../Keys";
+import { Keys } from "../Keys";
 
 export function RunAfter(key: string) {
     return (
-        target: Object,
+        target: object,
         propertyKey: string,
         descriptor: PropertyDescriptor
     ) => {

@@ -1,14 +1,14 @@
-import {Keys} from "../Keys";
+import { Keys } from "../Keys";
 
 export function Setter() {
     return (
-        target: Object,
+        target: object,
         propertyKey: string,
         descriptor: PropertyDescriptor
     ) => {
         const metadata: any = Reflect.getMetadata(Keys.SETTER_METHOD_PROPERTY_DECORATOR_KEY, target.constructor) || {};
 
-        if (metadata[Keys.SETTER_METHOD_PROPERTY_DECORATOR_KEY] == undefined) {
+        if (metadata[Keys.SETTER_METHOD_PROPERTY_DECORATOR_KEY] === undefined) {
             metadata[Keys.SETTER_METHOD_PROPERTY_DECORATOR_KEY] = [];
         }
 

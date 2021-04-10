@@ -1,7 +1,7 @@
-import {IFactoryDefinition} from "./definitionInterfaces/IFactoryDefinition";
-import {ConstructorInstantiation} from "./ConstructorInstantiation";
-import {IInstantiatable} from "../interfaces/IInstantiatable";
-import {IResolver} from "../interfaces/IResolver";
+import { IFactoryDefinition } from "./definitionInterfaces/IFactoryDefinition";
+import { ConstructorInstantiation } from "./ConstructorInstantiation";
+import { IInstantiatable } from "../interfaces/IInstantiatable";
+import { IResolver } from "../interfaces/IResolver";
 
 export class FactoryInstantiation implements IInstantiatable {
     tags = {};

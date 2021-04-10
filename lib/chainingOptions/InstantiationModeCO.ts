@@ -1,12 +1,11 @@
+import { ChainingOptions } from "./ChainingOptions";
+import { AsPrototypeCO } from "./AsPrototypeCO";
+import { AsFactoryResultCO } from "./AsFactoryResultCO";
+import { AsFactoryCO } from "./AsFactoryCO";
+import { Container } from "../Container";
+import { IInstantiatable } from "../interfaces/IInstantiatable";
 
-import {ChainingOptions} from "./ChainingOptions";
-import {AsPrototypeCO} from "./AsPrototypeCO";
-import {AsFactoryResultCO} from "./AsFactoryResultCO";
-import {AsFactoryCO} from "./AsFactoryCO";
-import {Container} from "../Container";
-import {IInstantiatable} from "../interfaces/IInstantiatable";
-
-export class InstantiationModeCO{
+export class InstantiationModeCO {
 
     private instantiable: IInstantiatable;
     private chainingOptions: ChainingOptions;
@@ -30,12 +29,8 @@ export class InstantiationModeCO{
         this.chainingOptions.asConstant();
     }
 
-    addTags(tags: object){
-        this.chainingOptions.addTags(tags)
-    }
-
-    asController() {
-        this.chainingOptions.addTags({controller: 'controller'})
+    addTags(tags: object) {
+        this.chainingOptions.addTags(tags);
     }
 
     asFactoryResult(factoryKey: string): AsFactoryResultCO {

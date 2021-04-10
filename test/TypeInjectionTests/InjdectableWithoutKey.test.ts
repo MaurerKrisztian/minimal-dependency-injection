@@ -1,5 +1,5 @@
-import {Container} from "../../lib/Container";
-import {Injectable} from "../../lib/decorators/Injectable";
+import { Container } from "../../lib/Container";
+import { Injectable } from "../../lib/decorators/Injectable";
 
 describe("Inject Without Keys (registerTypes)", () => {
     test("[1.] simple inject without keys and registerTypes", async () => {
@@ -9,11 +9,11 @@ describe("Inject Without Keys (registerTypes)", () => {
             Client,
             Service,
             SomethingElse
-        ])
+        ]);
 
         const service = await container.resolveByType<Service>(Service);
-        expect(service.check()).toBe("client says: hello something and something else str")
-    })
+        expect(service.check()).toBe("client says: hello something and something else str");
+    });
 
     test(" [2.] inject by types && default params", async () => {
         const container = new Container();
@@ -22,33 +22,29 @@ describe("Inject Without Keys (registerTypes)", () => {
             Client2,
             Service2,
             SomethingElse
-        ])
+        ]);
 
         const service2 = await container.resolveByType<Service2>(Service2);
-        expect(service2.test()[0]).toBe("default str test")
-        expect(service2.test()[1]).toBe("hello something")
-    })
-})
+        expect(service2.test()[0]).toBe("default str test");
+        expect(service2.test()[1]).toBe("hello something");
+    });
+});
 
 // [1.] classes
 
 @Injectable
 class Something {
-    constructor() {
-    }
 
     public getValue() {
-        return "something"
+        return "something";
     }
 }
 
 @Injectable
 class SomethingElse {
-    constructor() {
-    }
 
     public getValue() {
-        return "something else str"
+        return "something else str";
     }
 }
 
@@ -75,8 +71,6 @@ class Service {
 
 // [2.] classes
 
-
-
 @Injectable
 class Client2 {
     constructor(private readonly something: Something, private readonly defaultStr = "default str test") {
@@ -86,7 +80,7 @@ class Client2 {
         return `hello ${this.something.getValue()}`;
     }
 
-    public getDefaultStr(){
+    public getDefaultStr() {
         return this.defaultStr;
     }
 }

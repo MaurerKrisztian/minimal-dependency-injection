@@ -1,5 +1,5 @@
-import {Address} from "./Address";
-import {StudentHelper} from "./StudentHelper";
+import { Address } from "./Address";
+import { StudentHelper } from "./StudentHelper";
 
 export class Student {
     name: string;

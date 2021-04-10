@@ -1,7 +1,7 @@
-import {ChainingOptions} from "./ChainingOptions";
-import {AsFactoryCO} from "./AsFactoryCO";
-import {Container} from "../Container";
-import {IInstantiatable} from "../interfaces/IInstantiatable";
+import { ChainingOptions } from "./ChainingOptions";
+import { AsFactoryCO } from "./AsFactoryCO";
+import { Container } from "../Container";
+import { IInstantiatable } from "../interfaces/IInstantiatable";
 
 
 export class AsPrototypeCO {

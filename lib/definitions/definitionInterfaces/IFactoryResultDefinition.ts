@@ -1,6 +1,6 @@
-import {IBaseDefinition} from "./IBaseDefinition";
+import { IBaseDefinition } from "./IBaseDefinition";
 
 export interface IFactoryResultDefinition extends IBaseDefinition {
-    factoryMethodContext?: {},
-    factoryKey: string
+    factoryMethodContext?: {};
+    factoryKey: string;
 }

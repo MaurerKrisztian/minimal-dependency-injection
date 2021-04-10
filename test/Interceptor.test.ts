@@ -1,9 +1,9 @@
-import {Container} from "../lib/Container";
-import {MyInterceptor} from "./testClass/MyInterceptor";
+import { Container } from "../lib/Container";
+import { MyInterceptor } from "./testClass/MyInterceptor";
 
 
 describe("Interceptor tests", () => {
-    test("Interceptor test",async () => {
+    test("Interceptor test", async () => {
         const container = new Container();
 
         const myInterceptor = new MyInterceptor();
@@ -11,6 +11,6 @@ describe("Interceptor tests", () => {
         await container.done();
 
         const expected = await container.resolve("valami");
-        expect(expected).toBe("valami")
-    })
-})
+        expect(expected).toBe("valami");
+    });
+});

@@ -1,7 +1,7 @@
-import {IResolver} from "../../interfaces/IResolver";
-import {Keys} from "../../Keys";
-import {IMethodWrapper} from "../../interfaces/IMethodWrapper";
-import {IInitializer} from "./IInitializer";
+import { IResolver } from "../../interfaces/IResolver";
+import { Keys } from "../../Keys";
+import { IMethodWrapper } from "../../interfaces/IMethodWrapper";
+import { IInitializer } from "./IInitializer";
 
 export class MethodWrapperModifier implements IInitializer {
 
@@ -22,7 +22,7 @@ export class MethodWrapperModifier implements IInitializer {
 
             resolvedInstance[key] = (...params: any) => {
                 return resolveMethodWrapper.run(originalFn, params);
-            }
+            };
         }
 
         return resolvedInstance;
