@@ -11,11 +11,18 @@ import {Utils} from "./Utils";
 import {DefinitionRepository} from "./DefinitionRepository";
 import {Keys} from "./Keys";
 
+export {InjectProperty} from "./decorators/InjectProperty";
 export type singletonsType = Map<string, any>
+import {v4 as uuidv4} from 'uuid';
+
+export interface IContainerOption {
+    enableAutoCreate: boolean; // if dependency not exist in the container, creat it and register
+}
+
 
 export class Container implements IContainer, IResolver {
 
-    definitionsRepository = new DefinitionRepository() //new Map<string, IInstantiatable>();
+    definitionsRepository = new DefinitionRepository(this.options) //new Map<string, IInstantiatable>();
     protected singletons: singletonsType = new Map<string, any>();
     interceptors: IInterceptor[] = [];
 
@@ -23,25 +30,34 @@ export class Container implements IContainer, IResolver {
 
     protected DEFAULT_INSTANTIATION: instantiationMode = 'singleton';
 
+    constructor(private readonly options: IContainerOption = {
+        enableAutoCreate: false
+    }) {
+    }
+
     public register(key: string, ctr: any): InstantiationModeCO {
         const decoratorTags = this.getTagsMeta(ctr);
         this.setDefinition(key, this.getDefaultInstantiationDef(key, ctr, decoratorTags));
         return new InstantiationModeCO(this, key);
     }
 
-    getTagsMeta(ctr: any) {
-        if(!Utils.isClass(ctr)) return;
-        const meta = Reflect.getMetadata(Keys.ADD_TAGS_KEY, ctr.constructor) || {};
-        return meta[Keys.ADD_TAGS_KEY];
+    public registerTypes(constructors: any[]) {
+        for (const constructor of constructors) {
+            this.register(uuidv4(), constructor)
+        }
     }
 
-    hasKeyInDefinition(key: string): boolean {
-        return this.definitionsRepository.definitions.has(key);
-    }
+    public async resolveByType<T>(constructor: any): Promise<T> {
+        const def = this.definitionsRepository.getDefinitionByType(constructor)
 
-    async applyModificationToInstance(instance: any, definition: any) {
-        instance = await this.initializers.runInitializers(instance, definition);
-        return instance;
+        if (def === Keys.AUTO_CREATE_DEPENDENCY && this.options.enableAutoCreate) {
+            await this.registerTypes([constructor])
+            return await this.resolveByType(constructor);
+        } else if (def) {
+            return (this.definitionsRepository.getDefinitionByType(constructor) as IInstantiatable).instantiate();
+        } else {
+            throw new Error(`cannot resolve ${constructor}`)
+        }
     }
 
     public async resolve<T>(key: string): Promise<T> {
@@ -61,6 +77,20 @@ export class Container implements IContainer, IResolver {
         }
     }
 
+    getTagsMeta(ctr: any) {
+        if (!Utils.isClass(ctr)) return;
+        const meta = Reflect.getMetadata(Keys.ADD_TAGS_KEY, ctr.constructor) || {};
+        return meta[Keys.ADD_TAGS_KEY];
+    }
+
+    hasKeyInDefinition(key: string): boolean {
+        return this.definitionsRepository.definitions.has(key);
+    }
+
+    async applyModificationToInstance(instance: any, definition: any) {
+        instance = await this.initializers.runInitializers(instance, definition);
+        return instance;
+    }
 
     async getBySpecificTags(tags: object): Promise<any[]> {
         const keys = this.definitionsRepository.getDefinitionKeysBySpecificTags(tags);

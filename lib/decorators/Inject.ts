@@ -4,9 +4,9 @@ import {Keys} from "../Keys";
 /*
 * Save meta for constructor parameter or function parameter
 * */
-export function Inject(propertyKey: string) {
+export function Inject(propertyKey?: string) {
     return (
-        target: any,//Object,
+        target: any,
         key: string | symbol,
         parameterIndex: number
     ) => {

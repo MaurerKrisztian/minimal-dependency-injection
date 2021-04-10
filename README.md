@@ -9,7 +9,7 @@
 
 
 ### Setup:
-####tsconfig.json:
+#### tsconfig.json:
 Uncomment and fill in the following lines that are necessary in order to use the experimental decorators.
 ```json
 {

@@ -49,7 +49,6 @@ describe("resolve tests", () => {
             container.register("Promise", promise).asConstant();
 
             const expected = container.resolve("Promise");
-            // console.log(expected, promise)
             expect(await expected).toBe(await promise);
         })
     })
