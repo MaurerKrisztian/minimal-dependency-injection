@@ -5,21 +5,22 @@
   * singleton
   * constant definition
   * factory
-* bean injection by key
+* bean injection by key, type
 
 
 ### Setup:
 #### tsconfig.json:
-Uncomment and fill in the following lines that are necessary in order to use the experimental decorators.
 ```json
 {
-"experimentalDecorators": true,
-"emitDecoratorMetadata": true
+  "experimentalDecorators": true,
+  "emitDecoratorMetadata": true, 
+  "target": "es6",
 }
 ```
 
 ### Decorators:
 ```typescript
+@Injectable() 
 @Inject(key: string) // inject class constructor parameters or method parameters
 @InjectProperty(key: string) // inject class property
 @RunBefore(key: string) // when call a method run before
@@ -43,6 +44,8 @@ container.register('key4', value).asSingleton().withContext({'paramKey': 'otherK
 container.register('key4', 'some constant').asConstant() // register constant
 container.register('factoryKey', FactoryClass).asFactory();
 container.register('factoryResult', String).asFactoryResult('factoryKey');
+
+container.registerTypes([MyClass, Myclass2]) // registrate by type
 ```
 
 ### RESOLVE:
@@ -50,8 +53,119 @@ container.register('factoryResult', String).asFactoryResult('factoryKey');
 //RESOLVE
 const resolveResult = container.resolve(key);
 ```
+## Before - After
+Before:
+```typescript
+const productController  = new ProductController(new CacheService(new ProductRepository(new Database(connect)), new ScraperService(new ScraperServiceOptions(), true)));
+```
+After:
+```typescript
+const container = new Container({enableAutoCreate: true});
+const productController = container.resolveByType<ProductController>(ProductController)
+```
 
-#### Simplified sample:
+After 2:
+```typescript
+const container = new Container({enableAutoCreate: true});
+container.registerTypes([
+  ProductController,
+  CacheService,
+  ProductRepository,
+  Database,
+  ScraperService,
+  ScraperServiceOptions,
+])
+const productController = container.resolveByType<ProductController>(ProductController)
+```
+
+After 3:
+```typescript
+const container = new Container();
+container.register('ScraperServiceOptions',  ScraperServiceOptions).asSingleton();
+container.register('visible', true).asConstant()
+container.register('ScraperService', ScraperService).asSingleton();
+container.register('connection', connect).asConstant();
+container.register('Database', Database).asSingleton();
+container.register('ProductRepository', ProductRepository).asSingleton();
+container.register('CacheService', CacheService).asSingleton();
+container.register('ProductController', ProductController).asSingleton();
+const productController = container.resolve<ProductController>('ProductController');
+```
+Or can be combined as you wish.
+
+
+### Simplest usage without registration:
+
+```typescript
+@Injectable
+class Something {
+
+    public getValue() {
+        return "more";
+    }
+}
+
+@Injectable
+class SomethingElse {
+    constructor(private readonly something: Something, private readonly str: string = "pizza") {
+    }
+
+    public getValue() {
+        return `need ${this.something.getValue()} ${this.str}`;
+    }
+}
+
+@Injectable
+class Client {
+    constructor(private readonly something: Something, private readonly somethingElse: SomethingElse) {
+    }
+
+    public say() {
+        return `I ${this.somethingElse.getValue()} and ${this.something.getValue()} coffee.`;
+    }
+}
+
+@Injectable
+class Service {
+    constructor(private readonly client: Client) {
+    }
+
+    public check() {
+        return `client says: ${this.client.say()}`;
+    }
+}
+
+// create the container
+const container = new Container({enableAutoCreate: true});
+
+// resolve without registration any @Injectable class
+const service = await container.resolveByType<Service>(Service);
+
+console.log(service.check());  // it will be: "client says: I need more pizza and more coffee."
+```
+
+
+#### If you don't enable enableAutoCreate, the above code will look like this:
+```typescript
+    const container = new Container();
+
+    // registrate all dependencies 
+    await container.registerTypes([
+        Something,
+        Client,
+        Service,
+        SomethingElse
+    ]);
+
+    // you can run a coontainer test, it will check all the the dependencies.
+    // container.containerTest(); // if something missing throw a error
+
+    const service = await container.resolveByType<Service>(Service);
+    console.log(service.check());  // it will be: "client says: I need more pizza and more coffee."
+```
+
+
+#### You can specify every injected key:
 ```typescript
 class Client {
   constructor(@Inject('value') private readonly value: string) {
@@ -70,7 +184,7 @@ const container: IContainer = new Container();
 container.register('value', "world");
 container.register('client', Client);
 container.register('service', Service);
-const service = container.resolve('service');
+const service = container.resolve<Service>('service');
 console.log(service.check()); // Should write "client says: hello world"
 ```
 
@@ -195,23 +309,3 @@ container.register('factoryKey2', FactoryClass).asFactory();
 container.register('factoryResult2', String).asFactoryResult('factoryKey2').withMethodContext({'factoryMethodKey1': 'otherParam1', 'factoryMethodKey2': 'otherParam2'});
 const factoryResult2 = container.resolve<String>('factoryResult2'); // it will be: factoryResult:  factoryMethodName result: value: replaced1 value2: replaced2
 ```
-Before:
-```typescript
-const productController  = new ProductController(new CacheService(new ProductRepository(new Database(connect)), new ScraperService(new ScraperServiceOptions(), true)));
-```
-After:
-```typescript
-const container = new Container();
-container.register('ScraperServiceOptions',  ScraperServiceOptions).asSingleton();
-container.register('visible', true).asConstant()
-container.register('ScraperService', ScraperService).asSingleton();
-container.register('connection', connect).asConstant();
-container.register('Database', Database).asSingleton();
-container.register('ProductRepository', ProductRepository).asSingleton();
-container.register('CacheService', CacheService).asSingleton();
-container.register('ProductController', ProductController).asSingleton();
-const productController = container.resolve<ProductController>('ProductController');
-```
-
-Future plans:
-*  support type injection
