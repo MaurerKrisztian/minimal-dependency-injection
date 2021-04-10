@@ -61,7 +61,7 @@ const productController  = new ProductController(new CacheService(new ProductRep
 After:
 ```typescript
 const container = new Container({enableAutoCreate: true});
-const productController = container.resolveByType<ProductController>(ProductController)
+const productController = await container.resolveByType<ProductController>(ProductController)
 ```
 
 After 2:
@@ -75,7 +75,7 @@ container.registerTypes([
   ScraperService,
   ScraperServiceOptions,
 ])
-const productController = container.resolveByType<ProductController>(ProductController)
+const productController = await container.resolveByType<ProductController>(ProductController)
 ```
 
 After 3:
@@ -89,7 +89,7 @@ container.register('Database', Database).asSingleton();
 container.register('ProductRepository', ProductRepository).asSingleton();
 container.register('CacheService', CacheService).asSingleton();
 container.register('ProductController', ProductController).asSingleton();
-const productController = container.resolve<ProductController>('ProductController');
+const productController = await container.resolve<ProductController>('ProductController');
 ```
 Or can be combined as you wish.
 
