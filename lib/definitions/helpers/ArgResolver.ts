@@ -7,11 +7,11 @@ export class ArgResolver {
     constructor(private readonly resolver: IResolver) {
     }
 
-    paramIsNotRequired(param: IParam) {
+    paramIsNotRequired(param: IParam): boolean {
         return !this.resolver.hasKeyInDefinition(param.key) && !param?.isRequired;
     }
 
-    async resolveArguments(meta: any, context: any, decoratorKey: symbol | string) {
+    async resolveArguments(meta: any, context: any, decoratorKey: symbol | string): Promise<any[]> {
         let args: IParam[] = meta[decoratorKey];
         if (!args) return [];
         if (context) {
@@ -19,13 +19,13 @@ export class ArgResolver {
         }
 
         const resolvedArgs = [];
-        for (let i = 0; i < args.length; i++) {
-            if (!args[i]) {
+        for (const arg of args) {
+            if (!arg) {
                 resolvedArgs.push(Keys.OTHER_INJECTION_REQUIRED);
-            } else if (this.paramIsNotRequired(args[i])) {
+            } else if (this.paramIsNotRequired(arg)) {
                 resolvedArgs.push(undefined);
             } else {
-                resolvedArgs.push(await this.resolver.resolve(args[i].key, args[i].isRequired));
+                resolvedArgs.push(await this.resolver.resolve(arg.key, arg.isRequired));
             }
         }
         return resolvedArgs;

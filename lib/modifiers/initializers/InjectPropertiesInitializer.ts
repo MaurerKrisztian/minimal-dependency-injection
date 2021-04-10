@@ -10,9 +10,8 @@ export class InjectPropertiesInitializer implements IInitializer {
     }
 
     async run(resolvedInstance: any, definition: any): Promise<any> {
-        return await this.injectProperties(resolvedInstance, definition);
+        return this.injectProperties(resolvedInstance, definition);
     }
-
 
     async injectProperties(resolvedInstance: any, definition: any): Promise<any> {
         const propertiesMeta = Reflect.getMetadata(Keys.PROPERTY_INJECT_KEY, definition.content) || {};

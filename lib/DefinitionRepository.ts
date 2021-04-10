@@ -9,7 +9,7 @@ export class DefinitionRepository {
     constructor(private readonly options: IContainerOption) {
     }
 
-    getDefinitions() {
+    getDefinitions(): Map<string, IInstantiatable> {
         return this.definitions;
     }
 
@@ -31,7 +31,7 @@ export class DefinitionRepository {
             return Keys.AUTO_CREATE_DEPENDENCY;
         }
 
-        throw new Error(`definition not found by type: ${constructor}`)
+        throw new Error(`definition not found by type: ${constructor}`);
     }
 
     getDefinitionKeysBySpecificTags(tagObj: any): string[] {
@@ -67,7 +67,7 @@ export class DefinitionRepository {
         return resultKeys;
     }
 
-    addTags(key: string, tagsObj: object) {
+    addTags(key: string, tagsObj: object): void {
         const definition = this.getDefinition(key);
         const newTags = {...definition.tags, ...tagsObj};
         definition.tags = newTags;

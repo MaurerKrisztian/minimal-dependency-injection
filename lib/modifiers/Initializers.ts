@@ -26,8 +26,8 @@ export class Initializers {
     async runInitializers(instance: any, definition: any) {
         if (!instance || !Utils.isClass(definition.content)) return instance;
 
-        for (let i = 0; i < this.initializers.length; i++) {
-            instance = await this.initializers[i].run(instance, definition);
+        for (const initializer of this.initializers) {
+            instance = await initializer.run(instance, definition);
         }
 
         return instance;

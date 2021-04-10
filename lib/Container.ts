@@ -40,7 +40,7 @@ export class Container implements IContainer, IResolver {
         return new InstantiationModeCO(this, key);
     }
 
-    public registerTypes(constructors: any[]) {
+    public registerTypes(constructors: any[]): void {
         for (const constructor of constructors) {
             this.register(uuidv4(), constructor);
         }
@@ -51,7 +51,7 @@ export class Container implements IContainer, IResolver {
 
         if (def === Keys.AUTO_CREATE_DEPENDENCY && this.options.enableAutoCreate) {
             await this.registerTypes([constructor]);
-            return await this.resolveByType(constructor);
+            return this.resolveByType(constructor);
         } else if (def) {
             return (this.definitionsRepository.getDefinitionByType(constructor) as IInstantiatable).instantiate();
         } else {
@@ -65,10 +65,10 @@ export class Container implements IContainer, IResolver {
         switch (instantiatable.definition.instantiationMode) {
             case "prototype": {
                 const originalInstance = await this.resolvePrototype<T>(instantiatable.definition.key);
-                return await this.applyModificationToInstance(originalInstance, instantiatable.definition);
+                return this.applyModificationToInstance(originalInstance, instantiatable.definition);
             }
             case "singleton": {
-                return await this.resolveSingleton<T>(instantiatable);
+                return this.resolveSingleton<T>(instantiatable);
             }
             default: {
                 throw new Error(`Cannot resolve: ${key} because instantiationMode is:  ${instantiatable.definition.instantiationMode}`);
@@ -113,12 +113,11 @@ export class Container implements IContainer, IResolver {
         return result;
     }
 
-
-    addInterceptor(interceptor: IInterceptor) {
+    addInterceptor(interceptor: IInterceptor): void {
         this.interceptors.push(interceptor);
     }
 
-    async done() {
+    async done(): Promise<any> {
         await this.containerTest();
         this.runInterceptors();
     }
@@ -136,25 +135,25 @@ export class Container implements IContainer, IResolver {
     private getDefaultInstantiationDef(key: string, content: any, decoratorTags: any): IInstantiatable {
 
         if (Utils.isClass(content)) {
-            const res = new ConstructorInstantiation({
+            const classInstance = new ConstructorInstantiation({
                 key,
                 content,
                 context: {},
                 instantiationMode: this.DEFAULT_INSTANTIATION,
             }, this);
-            res.tags = decoratorTags;
-            return res;
+            classInstance.tags = decoratorTags;
+            return classInstance;
         }
-        const res = new ConstantInstantiation({
+        const constantInstance = new ConstantInstantiation({
             key,
             content,
             instantiationMode: this.DEFAULT_INSTANTIATION
         });
-        return res;
+        return constantInstance;
     }
 
     private async resolvePrototype<T>(key: string): Promise<T> {
-        return await this.definitionsRepository.getDefinition(key).instantiate();
+        return this.definitionsRepository.getDefinition(key).instantiate();
     }
 
     private async resolveSingleton<T>(instantiatable: IInstantiatable): Promise<T> {

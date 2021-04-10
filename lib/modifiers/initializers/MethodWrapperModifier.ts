@@ -9,7 +9,7 @@ export class MethodWrapperModifier implements IInitializer {
     }
 
     async run(instance: any, definition: any): Promise<any> {
-        return await this.setMethodWrapper(instance, definition);
+        return this.setMethodWrapper(instance, definition);
     }
 
     async setMethodWrapper(resolvedInstance: any, definition: any) {

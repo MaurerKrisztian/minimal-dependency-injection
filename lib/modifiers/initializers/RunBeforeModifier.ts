@@ -9,7 +9,7 @@ export class RunBeforeModifier implements IInitializer {
     }
 
     async run(instance: any, definition: any): Promise<any> {
-        return await this.setBeforeMethod(instance, definition);
+        return this.setBeforeMethod(instance, definition);
     }
 
     async setBeforeMethod(resolvedInstance: any, definition: any): Promise<any> {

@@ -14,7 +14,7 @@
 {
   "experimentalDecorators": true,
   "emitDecoratorMetadata": true, 
-  "target": "es6",
+  "target": "es6"
 }
 ```
 
@@ -51,7 +51,8 @@ container.registerTypes([MyClass, Myclass2]) // registrate by type
 ### RESOLVE:
 ```typescript
 //RESOLVE
-const resolveResult = container.resolve(key);
+const resolveResult = await container.resolve<Type>('key');
+const productController = await container.resolveByType<ProductController>(ProductController)
 ```
 ## Before - After
 Before:
@@ -230,6 +231,7 @@ console.log(service.check()); // Should write "client says: hello world"
 
 
 ### @RunAfter, @RunBefore, @MethodWrapper example
+#### !! Currently don't work with "this" ref !!
 * you can use this decorators individually or together
 ```typescript
     class Test {

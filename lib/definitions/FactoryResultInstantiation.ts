@@ -15,11 +15,11 @@ export class FactoryResultInstantiation implements IInstantiatable {
     }
 
     async instantiate() {
-        return await this.getFactoryResult(this.definition);
+        return this.getFactoryResult(this.definition);
     }
 
     public async getFactoryResult<T>(factoryResultDefinition: IFactoryResultDefinition): Promise<T> {
-        if (factoryResultDefinition.factoryKey == undefined) throw new Error(`cannot resolve ${factoryResultDefinition.key} as factory because do not have factoryKey`);
+        if (factoryResultDefinition.factoryKey === undefined) throw new Error(`cannot resolve ${factoryResultDefinition.key} as factory because do not have factoryKey`);
         const factoryDefinition: any = this.container.definitionsRepository.getDefinition(factoryResultDefinition.factoryKey).definition;
         const factoryObj = await this.container.resolve(factoryResultDefinition.factoryKey) as any;
         if (!factoryDefinition?.factoryFn) factoryDefinition.factoryFn = "create";

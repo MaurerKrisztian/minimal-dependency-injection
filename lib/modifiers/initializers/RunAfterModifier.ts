@@ -9,7 +9,7 @@ export class RunAfterModifier implements IInitializer {
     }
 
     async run(instance: any, definition: any): Promise<any> {
-        return await this.setRunAfter(instance, definition);
+        return this.setRunAfter(instance, definition);
     }
 
     async setRunAfter(resolvedInstance: any, definition: any) {

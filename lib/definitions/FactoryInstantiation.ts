@@ -23,6 +23,6 @@ export class FactoryInstantiation implements IInstantiatable {
     }
 
     async instantiate() {
-        return await this.constructorInstantiation.instantiate();
+        return this.constructorInstantiation.instantiate();
     }
 }

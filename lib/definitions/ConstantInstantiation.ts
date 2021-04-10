@@ -11,6 +11,6 @@ export class ConstantInstantiation implements IInstantiatable {
     }
 
     async instantiate() {
-        return await this.definition.content;
+        return this.definition.content;
     }
 }
