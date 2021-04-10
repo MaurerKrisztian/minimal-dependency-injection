@@ -1,6 +1,6 @@
 {
   "name": "minimal-dependency-injection-container",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Minimal dependency injection container.",
   "main": "build/Container.js",
   "types": "build",

@@ -50,7 +50,7 @@ export class Container implements IContainer, IResolver {
         const def = this.definitionsRepository.getDefinitionByType(constructor);
 
         if (def === Keys.AUTO_CREATE_DEPENDENCY && this.options.enableAutoCreate) {
-            await this.registerTypes([constructor]);
+            this.registerTypes([constructor]);
             return this.resolveByType(constructor);
         } else if (def) {
             return (this.definitionsRepository.getDefinitionByType(constructor) as IInstantiatable).instantiate();
@@ -144,12 +144,11 @@ export class Container implements IContainer, IResolver {
             classInstance.tags = decoratorTags;
             return classInstance;
         }
-        const constantInstance = new ConstantInstantiation({
+        return new ConstantInstantiation({
             key,
             content,
             instantiationMode: this.DEFAULT_INSTANTIATION
         });
-        return constantInstance;
     }
 
     private async resolvePrototype<T>(key: string): Promise<T> {

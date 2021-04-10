@@ -10,7 +10,7 @@ export class RunInitMethodInitializer implements IInitializer {
     }
 
     async run(resolvedInstance: any, definition: any): Promise<any> {
-        return await this.runInitMethod(resolvedInstance, definition);
+        return this.runInitMethod(resolvedInstance, definition);
     }
 
     async runInitMethod(resolvedInstance: any, definition: any): Promise<any> {
