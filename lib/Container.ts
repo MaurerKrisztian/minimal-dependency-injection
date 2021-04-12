@@ -10,9 +10,9 @@ import { Initializers } from "./modifiers/Initializers";
 import { Utils } from "./Utils";
 import { DefinitionRepository } from "./DefinitionRepository";
 import { Keys } from "./Keys";
+import { v4 as uuidv4 } from "uuid";
 
 export type singletonsType = Map<string, any>;
-import { v4 as uuidv4 } from "uuid";
 
 export interface IContainerOption {
     enableAutoCreate: boolean; // if dependency not exist in the container, creat it and register
@@ -29,7 +29,7 @@ export class Container implements IContainer, IResolver {
 
     protected DEFAULT_INSTANTIATION: instantiationMode = "singleton";
 
-    constructor(private readonly options: IContainerOption = {
+    constructor(public readonly options: IContainerOption = {
         enableAutoCreate: false
     }) {
     }

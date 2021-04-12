@@ -21,6 +21,17 @@ export class ConstructorInstantiation implements IInstantiatable {
         return this.resolveConstructor(this.definition.content, this.definition.context, Keys.INJECT_PROPERTY_DECORATOR_KEY);
     }
 
+    async resolveParentArgs(ctr: any) {
+        const args: any[] = []
+        const parentCtr = Object.getPrototypeOf(ctr);
+        const parentArgs: any[] = Reflect.getMetadata("design:paramtypes", parentCtr) || [];
+        for (const parentArg of parentArgs) {
+            args.push(await this.resolver.resolveByType(parentArg))
+        }
+
+        return args;
+    }
+
     /*
     * If has OTHER_INJECTION_REQUIRED arg (arg without key), this function will inject by type
     *  - if enable AutoCreate in the options then if the container item not found it will create and register
@@ -44,8 +55,14 @@ export class ConstructorInstantiation implements IInstantiatable {
 
     private async resolveConstructor(ctr: any, context: any, decoratorKey: symbol) {
         const meta = Reflect.getMetadata(decoratorKey, ctr) || {};
-        let args: any = await this.argResolver.resolveArguments(meta, context, Keys.INJECT_PROPERTY_DECORATOR_KEY);
-        args = await this.resolveArgsWithoutKey(ctr, args);
+        let args: any[] = await this.argResolver.resolveArguments(meta, context, Keys.INJECT_PROPERTY_DECORATOR_KEY);
+        if (args.length == 0) {
+            args = await this.resolveParentArgs(ctr);
+        }
+
+        if (this.resolver.options.enableAutoCreate) {
+            args = await this.resolveArgsWithoutKey(ctr, args);
+        }
         return new ctr(...args);
     }
 

@@ -20,7 +20,7 @@ export class ArgResolver {
 
         const resolvedArgs = [];
         for (const arg of args) {
-            if (!arg) {
+            if (!arg && this.resolver.options.enableAutoCreate) {
                 resolvedArgs.push(Keys.OTHER_INJECTION_REQUIRED);
             } else if (this.paramIsNotRequired(arg)) {
                 resolvedArgs.push(undefined);
