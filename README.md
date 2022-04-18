@@ -10,7 +10,7 @@
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=MaurerKrisztian_minimal-dependency-injection&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=MaurerKrisztian_minimal-dependency-injection)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=MaurerKrisztian_minimal-dependency-injection&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=MaurerKrisztian_minimal-dependency-injection)
 
-# minimal-dependency-injection-container
+# minimal-dependency-injection-container [![npm version](https://badge.fury.io/js/minimal-dependency-injection-container.svg)](https://badge.fury.io/js/minimal-dependency-injection-container)
 ### Minimal DI container, which support:
 * bean registration:
   * new instantiation
