@@ -1,3 +1,15 @@
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/summary/new_code?id=MaurerKrisztian_minimal-dependency-injection)
+
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=MaurerKrisztian_minimal-dependency-injection&metric=bugs)](https://sonarcloud.io/summary/new_code?id=MaurerKrisztian_minimal-dependency-injection)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=MaurerKrisztian_minimal-dependency-injection&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=MaurerKrisztian_minimal-dependency-injection)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=MaurerKrisztian_minimal-dependency-injection&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=MaurerKrisztian_minimal-dependency-injection)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=MaurerKrisztian_minimal-dependency-injection&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=MaurerKrisztian_minimal-dependency-injection)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=MaurerKrisztian_minimal-dependency-injection&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=MaurerKrisztian_minimal-dependency-injection)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=MaurerKrisztian_minimal-dependency-injection&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=MaurerKrisztian_minimal-dependency-injection)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=MaurerKrisztian_minimal-dependency-injection&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=MaurerKrisztian_minimal-dependency-injection)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=MaurerKrisztian_minimal-dependency-injection&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=MaurerKrisztian_minimal-dependency-injection)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=MaurerKrisztian_minimal-dependency-injection&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=MaurerKrisztian_minimal-dependency-injection)
+
 # minimal-dependency-injection-container
 ### Minimal DI container, which support:
 * bean registration:
