@@ -1,3 +1,12 @@
+# !! This repository moved. Please use the new location !! 
+
+## https://github.com/OpenZer0/type-chef-di
+
+## https://www.npmjs.com/package/type-chef-di
+
+
+
+
 [![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/summary/new_code?id=MaurerKrisztian_minimal-dependency-injection)
 
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=MaurerKrisztian_minimal-dependency-injection&metric=bugs)](https://sonarcloud.io/summary/new_code?id=MaurerKrisztian_minimal-dependency-injection)
